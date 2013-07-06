@@ -30,13 +30,13 @@ class ChargifyWebhookHelper
 			//If the request checks out, write to the log and return the event type and payload
 			if(self::validSignature($signature, $shared_key, $raw_post))
 			{
-				file_put_contents($log_file, self::genLogOutput($signature, $post_array['event'], true), FILE_APPEND | LOCK_EX, $raw_post);
+				file_put_contents($log_file, self::genLogOutput($signature, $post_array['event'], true, $raw_post), FILE_APPEND | LOCK_EX);
 
 				return array('event' => $post_array['event'], 'payload' => $post_array['payload']);
 			}
 		}
 		
-		file_put_contents($log_file, self::genLogOutput($signature, $post_array['event'], false), FILE_APPEND | LOCK_EX, $raw_post);
+		file_put_contents($log_file, self::genLogOutput($signature, $post_array['event'], false, $raw_post), FILE_APPEND | LOCK_EX);
 		
 		return false;
 	}
