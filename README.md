@@ -1,5 +1,5 @@
-chargify-webhook-helper v1.0
-============================
+chargify-webhook-helper v1.01
+=============================
 
 A simple bit of PHP that handles Chargify's webhook calls
 
