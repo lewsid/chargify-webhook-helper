@@ -18,7 +18,7 @@ class ChargifyWebhookHelper
 
 		//Make sense of the request headers, and tease out the signature
 		$headers = self::parseRequestHeaders($server_array);
-		if(isset($headers['X-Chargify-Webhook-Signature'])) { $signature = $headers['X-Chargify-Webhook-Signature']; }
+		if(isset($headers['X-Chargify-Webhook-Signature-Hmac-Sha-256'])) { $signature = $headers['X-Chargify-Webhook-Signature-Hmac-Sha-256']; }
 		else { return false; }
 
 		//Set the log file output path
@@ -76,7 +76,7 @@ class ChargifyWebhookHelper
 	*/
 	public static function validSignature($signature, $shared_key, $raw_post)
 	{    
-		if(md5($shared_key . $raw_post) == $signature) { return true; }
+		if(hash_hmac('sha256', $raw_post, $shared_key) == $signature) { return true; }
 		
 		return false;
 	}
